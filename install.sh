@@ -11,13 +11,26 @@ fi
 
 [ -f "${HOME}/.zshrc" ] && mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
 
-sed "s@XXX_PATH_XXX@${CUSTOMIZATION_DIR}@g" "${CUSTOMIZATION_DIR}/root_zshrc.zsh" > "${HOME}/.zshrc"
+sed "s@XXX_PATH_XXX@${CUSTOMIZATION_DIR}@g" "${CUSTOMIZATION_DIR}/root_zshrc.zsh" >"${HOME}/.zshrc"
 
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
-  read -p "Do you want to remove it?" remove
-  
-  [ "$remove" ~= "[yY]*" ] && rm -rf "$OHMYZSH"
+
+  while true; do
+    read -p "Do you want to remove it?" remove
+    case "$remove" in
+    [Yy]*)
+      rm -rf "$OHMYZSH"
+      break
+      ;;
+    [Nn]*)
+      break
+      ;;
+    *)
+      echo "Please answer yes or no."
+      ;;
+    esac
+  done
 fi
