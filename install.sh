@@ -7,8 +7,7 @@ CUSTOMIZATION_DIR="${CUSTOMIZATION_DIR:-"${HOME}/zsh-customization"}"
 if [ ! -d "$CUSTOMIZATION_DIR" ]; then
   git clone --recursive https://github.com/BrainStone/zsh-customization.git "$CUSTOMIZATION_DIR"
 else
-  git -C "$CUSTOMIZATION_DIR" pull
-  git -C "$CUSTOMIZATION_DIR" submodule update --init
+  git -C "$CUSTOMIZATION_DIR" pull --recurse-submodules --jobs=10
 fi
 
 # Take care of existing .zshrc
