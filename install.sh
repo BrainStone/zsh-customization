@@ -5,7 +5,7 @@ CUSTOMIZATION_DIR="${CUSTOMIZATION_DIR:-"${HOME}/zsh-customization"}"
 
 # Download or update git repo
 if [ ! -d "$CUSTOMIZATION_DIR" ]; then
-  git clone --recursive https://github.com/BrainStone/zsh-customization.git "$CUSTOMIZATION_DIR"
+  git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$CUSTOMIZATION_DIR"
 else
   git -C "$CUSTOMIZATION_DIR" pull --recurse-submodules --jobs=10
 fi
