@@ -21,13 +21,14 @@ sed "s@XXX_PATH_XXX@${CUSTOMIZATION_DIR}@g" "${CUSTOMIZATION_DIR}/root_zshrc.zsh
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
-[ "$OHMYZSH" == "${CUSTOMIZATION_DIR}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
+[ "$OHMYZSH" = "${CUSTOMIZATION_DIR}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
 
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
 
   while true; do
-    read -p "Do you want to remove it?" remove
+    printf '%s' "Do you want to remove it?"
+    read -r remove
     case "$remove" in
     [Yy]*)
       rm -rf "$OHMYZSH"
