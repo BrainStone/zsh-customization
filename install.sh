@@ -9,7 +9,9 @@ else
   git -C "$CUSTOMIZATION_DIR" submodule update --init
 fi
 
-[ -f "${HOME}/.zshrc" ] && mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
+[ -f "${HOME}/.zshrc" ] &&
+  [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${CUSTOMIZATION_DIR}/root_zshrc.zsh")" ] &&
+  mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
 
 sed "s@XXX_PATH_XXX@${CUSTOMIZATION_DIR}@g" "${CUSTOMIZATION_DIR}/root_zshrc.zsh" >"${HOME}/.zshrc"
 
