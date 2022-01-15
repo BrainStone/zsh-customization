@@ -85,5 +85,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k.zsh".
-[[ -f "${ZSH_CUSTOMIZATION_BASE}/p10k.zsh" ]] && source "${ZSH_CUSTOMIZATION_BASE}/p10k.zsh"
+# To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
+[[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
+  source "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh"
