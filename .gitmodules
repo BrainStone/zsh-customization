@@ -10,3 +10,6 @@
 [submodule "custom/themes/powerlevel10k"]
 	path = custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "helper/bash-to-zsh-hist"]
+	path = helper/bash-to-zsh-hist
+	url = https://gist.github.com/c14722ab66b505a49861b8a74e52b274.git
