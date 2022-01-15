@@ -24,7 +24,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH_CUSTOMIZATION_BASE="${0:a:h}"
-export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
+[[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
 export ZSH="${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh"
 export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
 

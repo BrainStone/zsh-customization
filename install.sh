@@ -58,9 +58,7 @@ fi
   mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
 
 # Install new zshrc
-[ "$ZSH_INSTALL_GLOBALLY" != "true" ] && remove_global_export="-e /ZSH_GLOBAL_CUSTOMIZATION_BASE=/d"
-
-sed -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" $remove_global_export "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
+sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
 [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
 
 # Get rid of existing Oh My ZSH installation
