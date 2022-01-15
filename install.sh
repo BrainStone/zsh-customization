@@ -47,7 +47,7 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 # Download or update git repo
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
-elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ] || 
+elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 fi
 
