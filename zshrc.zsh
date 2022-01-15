@@ -104,8 +104,11 @@ source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
 
 # User configuration
 
-export HISTSIZE=100000
-export HISTFILESIZE=100000
+export HISTFILE=~/.zsh_history
+export HISTSIZE=200000
+export SAVEHIST=100000
+
+setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
 
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
