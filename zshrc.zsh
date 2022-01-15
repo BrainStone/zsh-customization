@@ -98,7 +98,8 @@ plugins=(
   zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+source "${ZSH}/oh-my-zsh.sh"
+source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
 
 # User configuration
 
