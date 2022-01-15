@@ -31,9 +31,10 @@ fi
 
 # Global dir exists, we're using that!
 if [ -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ]; then
-  # Remove user local dir
-  [ -d "$ZSH_CUSTOMIZATION_BASE" ] &&
-    [ "${ZSH_CUSTOMIZATION_BASE:-xxx}" != "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] &&
+  # Remove user local dir if it exists
+  [ -n "$ZSH_CUSTOMIZATION_BASE" ] &&
+    [ -d "$ZSH_CUSTOMIZATION_BASE" ] &&
+    [ "$ZSH_CUSTOMIZATION_BASE" != "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] &&
     rm -rf "$ZSH_CUSTOMIZATION_BASE"
 
   # Set ZSH_CUSTOMIZATION_BASE to the global dir
