@@ -1,3 +1,17 @@
+# ~/.bashrc might contain useful aliases
+# Lets source it, while also adding compatibility stuff.
+# To disable it add `export ZSH_NO_BASHRC=true` to your ~/.zshrc_local
+
+if [[ "${ZSH_NO_BASHRC}" != "true" && -f "${HOME}/.bashrc" ]]; then
+  alias shopt=true
+  alias .=source
+  
+  source "${HOME}/.bashrc"
+  
+  unalias shopt
+  unalias .
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
