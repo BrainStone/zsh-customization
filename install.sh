@@ -66,6 +66,11 @@ sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUS
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 [ "$OHMYZSH" = "${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
 
+# Migrate bash history
+[ ! -f "${HOME}/.zsh_history" ] &&
+  [ -f "${HOME}/.bash_history" ] &&
+  python "${ZSH_CUSTOMIZATION_BASE}/helper/bash-to-zsh-hist/bash-to-zsh-hist.py" <"${HOME}/.bash_history" >>"${HOME}/.zsh_history"
+
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
 
