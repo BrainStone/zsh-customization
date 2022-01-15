@@ -20,7 +20,7 @@ ask_user_yn() {
 
 # Set global installation dir (may be customized externally)
 ZSH_GLOBAL_CUSTOMIZATION_BASE="${ZSH_GLOBAL_CUSTOMIZATION_BASE:-/opt/zsh-customization}"
-ZSH_INSTALL_GLOBALLY=false
+ZSH_INSTALL_GLOBALLY="${ZSH_INSTALL_GLOBALLY:-false}"
 
 if [ "$(id -u)" -eq "0" ] &&
   [ ! -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] &&
@@ -39,6 +39,7 @@ if [ -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ]; then
 
   # Set ZSH_CUSTOMIZATION_BASE to the global dir
   ZSH_CUSTOMIZATION_BASE="$ZSH_GLOBAL_CUSTOMIZATION_BASE"
+  ZSH_INSTALL_GLOBALLY=true
 fi
 
 # Set installation dir (may be customized externally)
@@ -59,7 +60,7 @@ fi
 
 # Install new zshrc
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
-[ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
+[ "$(id -u)" -eq "0" ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
