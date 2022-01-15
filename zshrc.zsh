@@ -90,11 +90,20 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(command-not-found git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(
+  command-not-found
+  gitfast
+  gitignore
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
