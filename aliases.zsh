@@ -7,6 +7,7 @@ alias update-zsh-theme='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh"'
 # Generic stuff
 alias ,='sudo -i'
 alias ll='ls -lAh'
+alias sudo='sudo ' # This preserves aliases through sudo!
 
 # git stuff
 alias newbranch='git checkout -b'
