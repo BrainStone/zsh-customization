@@ -73,4 +73,5 @@ if [ -d "$OHMYZSH" ]; then
 fi
 
 # Run zsh or just update it if already running!
-exec zsh
+[ "_$1" != "_--skip-restart" ] &&
+  exec zsh

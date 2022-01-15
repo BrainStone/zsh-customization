@@ -2,7 +2,7 @@
 # Pretty sure this list will grow and grow!
 
 # Selfupdate!
-alias update-zsh-theme='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh"'
+alias update-zsh-theme='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
 
 # Generic stuff
 alias ,='sudo -i'
