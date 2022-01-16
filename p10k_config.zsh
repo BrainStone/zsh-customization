@@ -906,12 +906,20 @@
   typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=2
   typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND=0
 
-  # Context format when running with privileges: user@hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%F{15}@%F{6}%m'
-  # Context format when in SSH without privileges: user@hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%F{15}@%F{6}%M'
-  # Default context format (no privileges, no SSH): user@hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%F{15}@%F{6}%m'
+  # # Context format when running with privileges: user@hostname.
+  # typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n%F{15}@%F{6}%m'
+  # # Context format when in SSH without privileges: user@hostname.
+  # typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%F{15}@%F{6}%M'
+  # # Default context format (no privileges, no SSH): user@hostname.
+  # typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%F{15}@%F{6}%m'
+
+  if (( P9K_SSH )); then
+    # Context format when in SSH: user@fqdn.
+    typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%F{15}@%F{6}%M'
+  else
+    # Context format when in local shell: user@hostname.
+    typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n%F{15}@%F{6}%m'
+  fi
 
   # Don't show context unless running with privileges or in SSH.
   # Tip: Remove the next line to always show context.
