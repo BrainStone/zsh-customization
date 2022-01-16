@@ -5,9 +5,9 @@
 if [[ "${ZSH_NO_BASHRC}" != "true" && -f "${HOME}/.bashrc" ]]; then
   alias shopt=true
   alias .=source
-  
+
   source "${HOME}/.bashrc"
-  
+
   unalias shopt
   unalias .
 fi
@@ -62,7 +62,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -109,6 +109,8 @@ export HISTSIZE=200000
 export SAVEHIST=100000
 
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
+
+export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=4
 
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
