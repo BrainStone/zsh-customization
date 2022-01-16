@@ -2,7 +2,7 @@
 
 ask_user_yn() {
   while true; do
-    printf '%s' "$*"
+    printf '%s ' "$*"
     read -r yn
     case "$yn" in
     [Yy]*)
