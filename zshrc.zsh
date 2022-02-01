@@ -99,6 +99,9 @@ plugins=(
   zsh-syntax-highlighting
   zsh-window-title
 )
+  
+# We don't want automatic updates
+zstyle ':omz:update' mode reminder
 
 source "${ZSH}/oh-my-zsh.sh"
 source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
