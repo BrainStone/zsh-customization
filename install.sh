@@ -55,6 +55,9 @@ elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 fi
 
+# Remove write permissions for the group and world
+chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
+
 # Take care of existing .zshrc
 [ -f "${HOME}/.zshrc" ] &&
   [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh")" ] &&
