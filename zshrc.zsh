@@ -48,7 +48,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
@@ -99,9 +99,6 @@ plugins=(
   zsh-syntax-highlighting
   zsh-window-title
 )
-  
-# We don't want automatic updates or reminders
-zstyle ':omz:update' mode disabled
 
 source "${ZSH}/oh-my-zsh.sh"
 source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
