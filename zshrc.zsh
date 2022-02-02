@@ -100,8 +100,8 @@ plugins=(
   zsh-window-title
 )
   
-# We don't want automatic updates
-zstyle ':omz:update' mode reminder
+# We don't want automatic updates or reminders
+zstyle ':omz:update' mode disabled
 
 source "${ZSH}/oh-my-zsh.sh"
 source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
