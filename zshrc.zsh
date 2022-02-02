@@ -97,7 +97,7 @@ plugins=(
   gitignore
   zsh-autosuggestions
   zsh-syntax-highlighting
-  zsh-window-title
+  # zsh-window-title
 )
 
 source "${ZSH}/oh-my-zsh.sh"
@@ -112,13 +112,24 @@ export SAVEHIST=100000
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
 
 # Restore defaults before setting my values
-zwt restore-defaults
+#zwt restore-defaults
 
 # Window title customization
 export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=4
 export ZSH_WINDOW_PREFIX='%n@%M'
 export ZSH_WINDOW_TITLE_IDLE='${ZSH_WINDOW_TITLE_PREFIX:+"${ZSH_WINDOW_TITLE_PREFIX} - "} %$ZSH_WINDOW_TITLE_DIRECTORY_DEPTH~${ZSH_WINDOW_TITLE_SUFFIX:+" - ${ZSH_WINDOW_TITLE_SUFFIX}"}'
 export ZSH_WINDOW_TITLE_ACTIVE='${ZSH_WINDOW_TITLE_PREFIX:+"${ZSH_WINDOW_TITLE_PREFIX} - "}%$ZSH_WINDOW_TITLE_DIRECTORY_DEPTH~ - %40>...>$1%>>${ZSH_WINDOW_TITLE_SUFFIX:+" - ${ZSH_WINDOW_TITLE_SUFFIX}"}'
+
+# Temporary setting windows title manually until ZSH Window title merges my PR
+window-title:precmd() {
+  echo -ne "\033]0;$(print -P "${(e)ZSH_WINDOW_TITLE_IDLE}")\007"
+}
+window-title:preexec() {
+  echo -ne "\033]0;$(print -P "${(e)ZSH_WINDOW_TITLE_ACTIVE}")\007"
+}
+autoload -U add-zsh-hook
+add-zsh-hook precmd window-title:precmd
+add-zsh-hook preexec window-title:preexec
 
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
