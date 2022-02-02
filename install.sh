@@ -2,7 +2,7 @@
 
 ask_user_yn() {
   while true; do
-    printf '%s ' "$*"
+    printf '%s (y/n)' "$*"
     read -r yn
     case "$yn" in
     [Yy]*)
@@ -76,7 +76,7 @@ OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
 
-  ask_user_yn "Do you want to yn it?" && rm -rf "$OHMYZSH"
+  ask_user_yn "Do you want to remove it?" && rm -rf "$OHMYZSH"
 fi
 
 # Run zsh or just update it if already running!
