@@ -70,8 +70,8 @@ OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 
 # Migrate bash history
 [ ! -f "${HOME}/.zsh_history" ] &&
-  [ -f "${HOME}/.bash_history" ] &&
-  python "${ZSH_CUSTOMIZATION_BASE}/helper/bash-to-zsh-hist/bash-to-zsh-hist.py" <"${HOME}/.bash_history" >>"${HOME}/.zsh_history"
+  [ -f "${HISTFILE:="${HOME}/.bash_history"}" ] &&
+  python "${ZSH_CUSTOMIZATION_BASE}/helper/bash-to-zsh-hist/bash-to-zsh-hist.py" <"${HISTFILE}" >>"${HOME}/.zsh_history"
 
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
