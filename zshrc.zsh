@@ -122,14 +122,10 @@ export ZSH_WINDOW_TITLE_ACTIVE='${ZSH_WINDOW_TITLE_PREFIX:+"${ZSH_WINDOW_TITLE_P
 
 # Temporary setting windows title manually until ZSH Window title merges my PR
 window-title:precmd() {
-  echo -ne "\033]0;"
-  print -P "${(e)ZSH_WINDOW_TITLE_IDLE}"
-  echo -ne "\007"
+  print -nP "\033]0;${(e)ZSH_WINDOW_TITLE_IDLE}\007"
 }
 window-title:preexec() {
-  echo -ne "\033]0;"
-  print -P "${(e)ZSH_WINDOW_TITLE_ACTIVE}"
-  echo -ne "\007"
+  print -nP "\033]0;${(e)ZSH_WINDOW_TITLE_ACTIVE}\007"
 }
 autoload -U add-zsh-hook
 add-zsh-hook precmd window-title:precmd
