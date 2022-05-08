@@ -31,8 +31,8 @@ bindkey -s "^[Ox" "8"
 bindkey -s "^[Oy" "9"
 # + -  * / =
 bindkey -s "^[Ol" "+"
-bindkey -s "^[Om" "-"; bindkey -s "^[OS" "/"
-bindkey -s "^[Oj" "*"; bindkey -s "^[OR" "/"
+bindkey -s "^[Om" "-"; bindkey -s "^[OS" "-"
+bindkey -s "^[Oj" "*"; bindkey -s "^[OR" "*"
 bindkey -s "^[Oo" "/"; bindkey -s "^[OQ" "/"
 bindkey -s "^[OX" "="
 
