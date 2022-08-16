@@ -133,7 +133,9 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=200000
 export SAVEHIST=100000
 
-setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
+setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_NO_FUNCTIONS
+# Define commands to completely ignore from history (because of sensitive data or spam or whatever). Separate with |
+export HISTORY_IGNORE="oc login *"
 
 # Restore defaults before setting my values
 #zwt restore-defaults
