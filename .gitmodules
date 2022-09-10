@@ -13,6 +13,3 @@
 [submodule "helper/bash-to-zsh-hist"]
 	path = helper/bash-to-zsh-hist
 	url = https://gist.github.com/96bc8e553e40937fe11f07b0139ccb84.git
-[submodule "custom/plugins/zsh-window-title"]
-	path = custom/plugins/zsh-window-title
-	url = https://github.com/olets/zsh-window-title.git
