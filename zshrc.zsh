@@ -121,7 +121,6 @@ plugins=(
   gitignore
   zsh-autosuggestions
   zsh-syntax-highlighting
-  # zsh-window-title
 )
 
 source "${ZSH}/oh-my-zsh.sh"
