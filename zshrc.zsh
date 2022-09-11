@@ -36,6 +36,12 @@ bindkey -s "^[Oj" "*"; bindkey -s "^[OR" "*"
 bindkey -s "^[Oo" "/"; bindkey -s "^[OQ" "/"
 bindkey -s "^[OX" "="
 
+# Path to your oh-my-zsh installation.
+export ZSH_CUSTOMIZATION_BASE="${0:a:h}"
+[[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
+export ZSH="${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh"
+export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
+
 # Check for updates as before instant prompt
 source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
 
@@ -48,12 +54,6 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH_CUSTOMIZATION_BASE="${0:a:h}"
-[[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
-export ZSH="${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh"
-export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
