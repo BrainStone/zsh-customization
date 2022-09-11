@@ -2,10 +2,10 @@
 # Taken from oh-my-zsh
 function is_update_available() {
   local branch
-  branch=${"$(builtin cd -q "$ZSH_CUSTOMIZATION_BASE"; git config --local zsh_customization.branch)":-master}
+  branch=${"$(builtin cd -q "$ZSH_CUSTOMIZATION_BASE"; git config --local zsh_customization.branch 2>/dev/null)":-master}
 
   local remote remote_url remote_repo
-  remote=${"$(builtin cd -q "$ZSH_CUSTOMIZATION_BASE"; git config --local zsh_customization.remote)":-origin}
+  remote=${"$(builtin cd -q "$ZSH_CUSTOMIZATION_BASE"; git config --local zsh_customization.remote 2>/dev/null)":-origin}
   remote_url=$(builtin cd -q "$ZSH_CUSTOMIZATION_BASE"; git config remote.$remote.url)
 
   local repo
