@@ -161,3 +161,6 @@ add-zsh-hook preexec window-title:preexec
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
   source "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh"
+
+# Check for updates as last thing
+source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
