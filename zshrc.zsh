@@ -1,8 +1,12 @@
+# Little helper to check if variable is set and not false, no and 0
+function is_variable_set() {
+  (( ${(P)+1} )) && [[ ${(P)1} != "false" && ${(P)1} != "no" && ${(P)1} != "0" ]]
+}
+
 # ~/.bashrc might contain useful aliases
 # Lets source it, while also adding compatibility stuff.
-# To disable it add `export ZSH_NO_BASHRC=true` to your ~/.zshrc_local
 
-if [[ "${ZSH_NO_BASHRC}" != "true" && -f "${HOME}/.bashrc" ]]; then
+if ! is_variable_set ZSH_NO_BASHRC && [[ -f "${HOME}/.bashrc" ]]; then
   alias shopt=true
   alias .=source
 

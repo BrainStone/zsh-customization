@@ -55,7 +55,7 @@ function is_update_available() {
 }
 
 # Always check for updates unless ZSH_DISABLE_UPDATE_CHECK is set
-if (( ! ${+ZSH_DISABLE_UPDATE_CHECK} )) && is_update_available; then
+if ! is_variable_set ZSH_DISABLE_UPDATE_CHECK && is_update_available; then
   printf '\r\e[0K' # move cursor to first column and clear whole line
   echo "[zsh-customization] It's time to update! You can do that by running \`update-zsh-theme\`"
   return 0
