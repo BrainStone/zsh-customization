@@ -54,12 +54,8 @@ function is_update_available() {
   [[ $base != $remote_head ]]
 }
 
-if ! is_update_available; then
-  return
-fi
-
-# If in reminder mode or user has typed input, show reminder and exit
-if is_update_available; then
+# Always check for updates unless ZSH_DISABLE_UPDATE_CHECK is set
+if (( ! ${+ZSH_DISABLE_UPDATE_CHECK} )) && is_update_available; then
   printf '\r\e[0K' # move cursor to first column and clear whole line
   echo "[zsh-customization] It's time to update! You can do that by running \`update-zsh-theme\`"
   return 0
