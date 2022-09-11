@@ -29,7 +29,7 @@
   # Zsh >= 5.1 is required.
   autoload -Uz is-at-least && is-at-least 5.1 || return
 
-  typeset IS_TTY="command $(( (( ${+ZSH_FORCE_TTY} )) || [[ "$TTY" == /dev/tty* ]] ) && echo true || echo false)"
+  typeset -g ZSH_IS_TTY="command $(( (( ${+ZSH_FORCE_TTY} )) || [[ "$TTY" == /dev/tty* ]] ) && echo true || echo false)"
 
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
@@ -110,7 +110,7 @@
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
-  typeset -g POWERLEVEL9K_MODE="$(${=IS_TTY} && echo ascii || echo nerdfont-complete)"
+  typeset -g POWERLEVEL9K_MODE="$(${=ZSH_IS_TTY} && echo ascii || echo nerdfont-complete)"
   # When set to `moderate`, some icons will have an extra space after them. This is meant to avoid
   # icon overlap when using non-monospace fonts. When set to `none`, spaces are not added.
   typeset -g POWERLEVEL9K_ICON_PADDING=none
@@ -131,7 +131,7 @@
   # Add an empty line before each prompt.
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
-  if ${=IS_TTY}; then
+  if ${=ZSH_IS_TTY}; then
     # Connect left prompt lines with these symbols. You'll probably want to use the same color
     # as POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND below.
     typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%242F╭-'
@@ -171,17 +171,17 @@
   fi
 
   # Separator between same-color segments on the left.
-  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR="$(${=IS_TTY} && echo '|' || echo '\uE0B1')"
+  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR="$(${=ZSH_IS_TTY} && echo '|' || echo '\uE0B1')"
   # Separator between same-color segments on the right.
-  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR="$(${=IS_TTY} && echo '|' || echo '\uE0B3')"
+  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR="$(${=ZSH_IS_TTY} && echo '|' || echo '\uE0B3')"
   # Separator between different-color segments on the left.
-  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="$(${=IS_TTY} && echo '' || echo '\uE0B0')"
+  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="$(${=ZSH_IS_TTY} && echo '' || echo '\uE0B0')"
   # Separator between different-color segments on the right.
-  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="$(${=IS_TTY} && echo '' || echo '\uE0B2')"
+  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="$(${=ZSH_IS_TTY} && echo '' || echo '\uE0B2')"
   # The right end of left prompt.
-  typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL="$(${=IS_TTY} && echo '' || echo '\uE0B0')"
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL="$(${=ZSH_IS_TTY} && echo '' || echo '\uE0B0')"
   # The left end of right prompt.
-  typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL="$(${=IS_TTY} && echo '' || echo '\uE0B2')"
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL="$(${=ZSH_IS_TTY} && echo '' || echo '\uE0B2')"
   # The left end of left prompt.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
   # The right end of right prompt.
@@ -191,7 +191,7 @@
 
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND="$(${=IS_TTY} && echo 0 || echo 232)"
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND="$(${=ZSH_IS_TTY} && echo 0 || echo 232)"
   typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
@@ -204,13 +204,13 @@
   # Red prompt symbol if the last command failed.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
   # Default prompt symbol.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION="$(${=IS_TTY} && echo '>' || echo '❯')"
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION="$(${=ZSH_IS_TTY} && echo '>' || echo '❯')"
   # Prompt symbol in command vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION="$(${=IS_TTY} && echo '<' || echo '❮')"
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION="$(${=ZSH_IS_TTY} && echo '<' || echo '❮')"
   # Prompt symbol in visual vi mode.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='V'
   # Prompt symbol in overwrite vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION="$(${=IS_TTY} && echo '^' || echo '▶')"
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION="$(${=ZSH_IS_TTY} && echo '^' || echo '▶')"
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
   # No line terminator if prompt_char is the last segment.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=
@@ -367,7 +367,7 @@
   typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON="$(${=IS_TTY} && echo '' || echo '\uF126 ')"
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON="$(${=ZSH_IS_TTY} && echo '' || echo '\uF126 ')"
 
   # Untracked files icon. It's really a question mark, your font isn't broken.
   # Change the value of this parameter to show a different icon.
@@ -405,7 +405,7 @@
       # If local branch name is at most 32 characters long, show it in full.
       # Otherwise show the first 12 … the last 12.
       # Tip: To always show local branch name in full without truncation, delete the next line.
-      (( $#branch > 32 )) && branch[13,-13]="$(${=IS_TTY} && echo ".." || echo "…")"  # <-- this line
+      (( $#branch > 32 )) && branch[13,-13]="$(${=ZSH_IS_TTY} && echo ".." || echo "…")"  # <-- this line
       res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
     fi
 
@@ -418,7 +418,7 @@
       # If tag name is at most 32 characters long, show it in full.
       # Otherwise show the first 12 … the last 12.
       # Tip: To always show tag name in full without truncation, delete the next line.
-      (( $#tag > 32 )) && tag[13,-13]="$(${=IS_TTY} && echo ".." || echo "…")"  # <-- this line
+      (( $#tag > 32 )) && tag[13,-13]="$(${=ZSH_IS_TTY} && echo ".." || echo "…")"  # <-- this line
       res+="${meta}#${clean}${tag//\%/%%}"
     fi
 
@@ -438,15 +438,15 @@
     fi
 
     # ⇣42 if behind the remote.
-    (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${clean}$(${=IS_TTY} && echo "<" || echo "⇣")${VCS_STATUS_COMMITS_BEHIND}"
+    (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${clean}$(${=ZSH_IS_TTY} && echo "<" || echo "⇣")${VCS_STATUS_COMMITS_BEHIND}"
     # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
     (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && res+=" "
-    (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${clean}$(${=IS_TTY} && echo ">" || echo "⇡")${VCS_STATUS_COMMITS_AHEAD}"
+    (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${clean}$(${=ZSH_IS_TTY} && echo ">" || echo "⇡")${VCS_STATUS_COMMITS_AHEAD}"
     # ⇠42 if behind the push remote.
-    (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${clean}$(${=IS_TTY} && echo "<-" || echo "⇠")${VCS_STATUS_PUSH_COMMITS_BEHIND}"
+    (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${clean}$(${=ZSH_IS_TTY} && echo "<-" || echo "⇠")${VCS_STATUS_PUSH_COMMITS_BEHIND}"
     (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" "
     # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
-    (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean}$(${=IS_TTY} && echo "->" || echo "⇢")${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+    (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean}$(${=ZSH_IS_TTY} && echo "->" || echo "⇢")${VCS_STATUS_PUSH_COMMITS_AHEAD}"
     # *42 if have stashes.
     (( VCS_STATUS_STASHES        )) && res+=" ${clean}*${VCS_STATUS_STASHES}"
     # 'merge' if the repo is in an unusual state.
@@ -466,7 +466,7 @@
     # than the number of files in the Git index, or due to bash.showDirtyState being set to false
     # in the repository config. The number of staged and untracked files may also be unknown
     # in this case.
-    (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}$(${=IS_TTY} && echo "-" || echo "─")─"
+    (( VCS_STATUS_HAS_UNSTAGED == -1 )) && res+=" ${modified}$(${=ZSH_IS_TTY} && echo "-" || echo "─")─"
 
     typeset -g my_git_format=$res
   }
@@ -494,7 +494,7 @@
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # Custom icon.
-  ${=IS_TTY} && typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=
+  ${=ZSH_IS_TTY} && typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
   # typeset -g POWERLEVEL9K_VCS_PREFIX='on '
 
@@ -511,21 +511,21 @@
   # Status on success. No content, just an icon. No need to show it if prompt_char is enabled as
   # it will signify success by turning green.
   typeset -g POWERLEVEL9K_STATUS_OK=true
-  typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION="$(${=IS_TTY} && echo 'ok' || echo '✔')"
+  typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION="$(${=ZSH_IS_TTY} && echo 'ok' || echo '✔')"
   typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=2
   typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=0
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION="$(${=IS_TTY} && echo 'ok' || echo '✔')"
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION="$(${=ZSH_IS_TTY} && echo 'ok' || echo '✔')"
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=2
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=0
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
-  typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION="$(${=IS_TTY} && echo 'err' || echo '✘')"
+  typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION="$(${=ZSH_IS_TTY} && echo 'err' || echo '✘')"
   typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=3
   typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=1
 
@@ -533,14 +533,14 @@
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION="$(${=IS_TTY} && echo 'err' || echo '✘')"
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION="$(${=ZSH_IS_TTY} && echo 'err' || echo '✘')"
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=3
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=1
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero.
   # It may look like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION="$(${=IS_TTY} && echo 'err' || echo '✘')"
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION="$(${=ZSH_IS_TTY} && echo 'err' || echo '✘')"
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=3
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=1
 
@@ -555,7 +555,7 @@
   # Duration format: 1d 2h 3m 4s.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
-  ${=IS_TTY} && typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_VISUAL_IDENTIFIER_EXPANSION=
+  ${=ZSH_IS_TTY} && typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
   # typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX='took '
 
@@ -884,7 +884,7 @@
   # Tip: To always display tasks without truncation, delete the following parameter.
   # Tip: To hide task names and display just the icon when time tracking is enabled, set the
   # value of the following parameter to "".
-  typeset -g POWERLEVEL9K_TIMEWARRIOR_CONTENT_EXPANSION='${P9K_CONTENT:0:24}${${P9K_CONTENT:24}:+$(${=IS_TTY} && echo ".." || echo "…")}'
+  typeset -g POWERLEVEL9K_TIMEWARRIOR_CONTENT_EXPANSION='${P9K_CONTENT:0:24}${${P9K_CONTENT:24}:+$(${=ZSH_IS_TTY} && echo ".." || echo "…")}'
 
   # Custom icon.
   # typeset -g POWERLEVEL9K_TIMEWARRIOR_VISUAL_IDENTIFIER_EXPANSION='⭐'
@@ -1613,7 +1613,7 @@
   #   P9K_IP_TX_BYTES_DELTA | number of bytes sent since last prompt
   #   P9K_IP_RX_RATE        | receive rate (since last prompt)
   #   P9K_IP_TX_RATE        | send rate (since last prompt)
-  typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='${P9K_IP_RX_RATE:+'"$(${=IS_TTY} && echo '<' || echo '⇣')"'$P9K_IP_RX_RATE }${P9K_IP_TX_RATE:+'"$(${=IS_TTY} && echo '>' || echo '⇡')"'$P9K_IP_TX_RATE }$P9K_IP_IP'
+  typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='${P9K_IP_RX_RATE:+'"$(${=ZSH_IS_TTY} && echo '<' || echo '⇣')"'$P9K_IP_RX_RATE }${P9K_IP_TX_RATE:+'"$(${=ZSH_IS_TTY} && echo '>' || echo '⇡')"'$P9K_IP_TX_RATE }$P9K_IP_IP'
   # Show information for the first network interface whose name matches this regular expression.
   # Run `ifconfig` or `ip -4 a show` to see the names of all network interfaces.
   typeset -g POWERLEVEL9K_IP_INTERFACE='[ew].*'
@@ -1636,7 +1636,7 @@
   # Show battery in yellow when it's discharging.
   typeset -g POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=3
   # Battery pictograms going from low to high level of charge.
-  ${=IS_TTY} && \
+  ${=ZSH_IS_TTY} && \
     typeset -g POWERLEVEL9K_BATTERY_STAGES=('battery') || \
     typeset -g POWERLEVEL9K_BATTERY_STAGES='\uf58d\uf579\uf57a\uf57b\uf57c\uf57d\uf57e\uf57f\uf580\uf581\uf578'
   # Don't show the remaining time to charge/discharge.
@@ -1681,7 +1681,7 @@
   # behavior where they contain the end times of their preceding commands.
   typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
   # Custom icon.
-  ${=IS_TTY} && typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=
+  ${=ZSH_IS_TTY} && typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='at '
 
@@ -1692,7 +1692,7 @@
   #
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
-    p10k segment -b 1 -f 3 -i "$(${=IS_TTY} && echo '*' || echo '⭐')" -t 'hello, %n'
+    p10k segment -b 1 -f 3 -i "$(${=ZSH_IS_TTY} && echo '*' || echo '⭐')" -t 'hello, %n'
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
