@@ -28,7 +28,7 @@
 
   # Zsh >= 5.1 is required.
   autoload -Uz is-at-least && is-at-least 5.1 || return
-  
+
   typeset IS_TTY="command $([[ "$TTY" == /dev/tty* ]] && echo true || echo false)"
 
   # The list of segments shown on the left. Fill it with the most important segments.
@@ -191,7 +191,7 @@
 
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND="$(${=IS_TTY} && echo 0 || echo 232)"
   typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
