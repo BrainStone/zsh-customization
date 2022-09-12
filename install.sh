@@ -55,6 +55,10 @@ elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 fi
 
+if ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" &>/dev/null; then
+  git config --add --system safe.directory "$ZSH_CUSTOMIZATION_BASE"
+fi
+
 # Remove write permissions for the group and world
 chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
 
