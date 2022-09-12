@@ -51,7 +51,7 @@ if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
 elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" reset --hard
-  git -C "$ZSH_CUSTOMIZATION_BASE" clean -d -f
+  git -C "$ZSH_CUSTOMIZATION_BASE" clean -dx -ff
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 fi
 
