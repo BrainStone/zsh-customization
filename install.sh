@@ -53,6 +53,8 @@ elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" reset --hard
   git -C "$ZSH_CUSTOMIZATION_BASE" clean -dx -ff
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
+else
+  echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat --format '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
 fi
 
 if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" &>/dev/null; then
