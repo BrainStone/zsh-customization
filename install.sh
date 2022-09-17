@@ -57,7 +57,7 @@ else
   echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat --format '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
 fi
 
-if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" &>/dev/null; then
+if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" >/dev/null 2>&1; then
   git config --add --system safe.directory "$ZSH_CUSTOMIZATION_BASE"
 fi
 
