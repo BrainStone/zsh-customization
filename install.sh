@@ -22,7 +22,9 @@ ask_user_yn() {
 ZSH_GLOBAL_CUSTOMIZATION_BASE="${ZSH_GLOBAL_CUSTOMIZATION_BASE:-/opt/zsh-customization}"
 ZSH_INSTALL_GLOBALLY="${ZSH_INSTALL_GLOBALLY:-false}"
 
-if [ "$(id -u)" -eq "0" ] &&
+USER_ID="$(id -u)"
+
+if [ "$USER_ID" -eq 0 ] &&
   [ ! -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] &&
   ask_user_yn "Do you want to install these customizations globally?"; then
   ZSH_CUSTOMIZATION_BASE="$ZSH_GLOBAL_CUSTOMIZATION_BASE"
@@ -49,7 +51,7 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 # Download or update git repo
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
-elif [ "$(id -u)" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+elif [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" reset --hard
   git -C "$ZSH_CUSTOMIZATION_BASE" clean -dx -ff
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
@@ -71,7 +73,7 @@ chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
 
 # Install new zshrc
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
-[ "$(id -u)" -eq "0" ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
+[ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
