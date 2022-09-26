@@ -1,6 +1,12 @@
 # This checks if an update is available
 # Taken from oh-my-zsh
 function is_update_available() {
+  # Check if we have a default route, else assume no update available (as we don't have an internet connection!)
+  # If we have a default gateway `route -n` outputs a line that looks like this and we just try to match it:
+  # 0.0.0.0 <gateway IP> 0.0.0.0 UG <more stuff>
+  # The U means up, G means gateway (not important, that's why we're not checking it). The U is gurantueed to be first.
+  route -n | grep -qE "^(0\.){3}0[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+(0\.){3}0[[:space:]]+U" || return 1
+
   local branch
   branch=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh_customization.branch 2>/dev/null)":-master}
 
