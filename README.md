@@ -6,10 +6,17 @@ These are my zsh settings and customizations. Will probably spend waaaaay too mu
 
 Installing this is super straight forward!
 
-Just run the install.sh:
+Make sure you have the following commands installed:
+
+- `curl`
+- `git`
+- `route`
+- `zsh`
+
+Then just run the install.sh:
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/BrainStone/zsh-customization/master/install.sh)"`
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/BrainStone/zsh-customization/master/install.sh)"
 ```
 
 ## Special variables
