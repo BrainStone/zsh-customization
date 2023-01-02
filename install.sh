@@ -24,7 +24,7 @@ ask_user_yn() {
 
 missing_commands=""
 for command in chmod git mv rm route sed zsh; do
-  if command_exists "$command"; then
+  if ! command_exists "$command"; then
     missing_commands="${missing_commands} $command"
   fi
 done
