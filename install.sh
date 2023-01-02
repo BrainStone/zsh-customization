@@ -1,5 +1,9 @@
 #!/bin/sh
 
+command_exists() {
+  [ -x "$(command -v "$1")" ]
+}
+
 ask_user_yn() {
   while true; do
     printf '%s (y/n)' "$*"
@@ -17,6 +21,18 @@ ask_user_yn() {
     esac
   done
 }
+
+missing_commands=""
+for command in chmod git mv rm route sed zsh; do
+  missing_commands="${missing_commands} $command"
+done
+
+if [ -n "$missing_commands" ]; then
+  echo "You are missing the following commands:${missing_commands}"
+  echo "Please install them before retrying!"
+
+  exit 1
+fi
 
 # Set global installation dir (may be customized externally)
 ZSH_GLOBAL_CUSTOMIZATION_BASE="${ZSH_GLOBAL_CUSTOMIZATION_BASE:-/opt/zsh-customization}"
@@ -83,7 +99,7 @@ OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 
 # Detect python version
 for command in python3 python python2 :; do
-  if command -v "$command" >/dev/null; then
+  if command_exists "$command"; then
     python_command="$command"
     break
   fi
