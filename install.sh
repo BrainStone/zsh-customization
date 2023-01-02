@@ -63,8 +63,10 @@ if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.dire
   git config --add --system safe.directory "$ZSH_CUSTOMIZATION_BASE"
 fi
 
-# Remove write permissions for the group and world
-chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
+# Remove write permissions for the group and world (if the repo belongs to you)
+if [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+  chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
+fi
 
 # Take care of existing .zshrc
 [ -f "${HOME}/.zshrc" ] &&
