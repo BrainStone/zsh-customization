@@ -8,10 +8,10 @@ function is_update_available() {
   route -n | grep -qE "^(0\.){3}0[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+(0\.){3}0[[:space:]]+U" || return 1
 
   local branch
-  branch=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh_customization.branch 2>/dev/null)":-master}
+  branch=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)":-master}
 
   local remote remote_url remote_repo
-  remote=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh_customization.remote 2>/dev/null)":-origin}
+  remote=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.remote 2>/dev/null)":-origin}
   remote_url=$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local "remote.$remote.url" 2>/dev/null)
 
   local repo
