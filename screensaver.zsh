@@ -4,7 +4,8 @@
 export ZSH_SCREENSAVER_DELAY="${ZSH_SCREENSAVER_DELAY:-300}"
 export ZSH_SCREENSAVER_NEEDS_EXIT_HELP="${ZSH_SCREENSAVER_NEEDS_EXIT_HELP:-false}"
 
-if ! declare -F screensaver:screensaver >/dev/null; then
+# If function screensaver:screensaver isn't defined provide a default implementation
+if ! type 'screensaver:screensaver' 2>/dev/null | grep -q 'function'; then
   screensaver:screensaver() {
     cmatrix -abs
   }
