@@ -70,8 +70,12 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
 elif [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+  branch="$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)"
+  branch="${branch:-master}"
+
   git -C "$ZSH_CUSTOMIZATION_BASE" reset --hard
   git -C "$ZSH_CUSTOMIZATION_BASE" clean -dx -ff
+  git -C "$ZSH_CUSTOMIZATION_BASE" checkout "$branch"
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 else
   echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat --format '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
