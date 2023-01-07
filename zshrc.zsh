@@ -132,6 +132,7 @@ plugins=(
 
 source "${ZSH}/oh-my-zsh.sh"
 source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
+source "${ZSH_CUSTOMIZATION_BASE}/screensaver.zsh"
 
 # User configuration
 
