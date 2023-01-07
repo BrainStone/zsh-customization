@@ -22,10 +22,10 @@ screensaver:invoker() {
   if is_variable_set ZSH_SCREENSAVER_NEEDS_EXIT_HELP; then
     # Start screensaver as background command
     screensaver:screensaver &
-    pid=$!
+    local pid="$!"
 
     # Wait for key stroke
-    read -k1 -s
+    read -sk
 
     # Stop program
     kill "$pid"
@@ -34,6 +34,8 @@ screensaver:invoker() {
     screensaver:screensaver
   fi
 
+  # Clear out standard input
+  read -lsk
   # Reset prompt after program ends
   zle reset-prompt
 }
