@@ -34,6 +34,9 @@ screensaver:invoker() {
     screensaver:screensaver
   fi
 
+  # Ensure we consider a key to be pressed (for example Ctrl+C might not update the atime)
+  touch "$(tty)" &>/dev/null
+
   # Clear out standard input
   read -lsk
   # Reset prompt after program ends
