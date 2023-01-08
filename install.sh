@@ -6,7 +6,7 @@ command_exists() {
 
 ask_user_yn() {
   while true; do
-    printf '%s (y/n) ' "$*"
+    printf "%s (y/n) " "$*"
     read -r yn
     case "$yn" in
     [Yy]*)
@@ -38,6 +38,7 @@ fi
 
 # Set global installation dir (may be customized externally)
 ZSH_GLOBAL_CUSTOMIZATION_BASE="${ZSH_GLOBAL_CUSTOMIZATION_BASE:-/opt/zsh-customization}"
+# Whether to install the software globally
 ZSH_INSTALL_GLOBALLY="${ZSH_INSTALL_GLOBALLY:-false}"
 
 USER_ID="$(id -u)"
@@ -69,7 +70,8 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 # Download or update git repo
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
-elif [ "$USER_ID" -eq "$(stat -c '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+elif [ "$USER_ID" -eq "$(stat -c "%u" "$ZSH_CUSTOMIZATION_BASE")" ]; then
+  # Get the git branch to use from the variable
   branch="$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)"
   branch="${branch:-master}"
 
@@ -78,7 +80,7 @@ elif [ "$USER_ID" -eq "$(stat -c '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" checkout "$branch"
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 else
-  echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat -c '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
+  echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat -c "%U" "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
 fi
 
 if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" >/dev/null 2>&1; then
@@ -86,7 +88,7 @@ if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.dire
 fi
 
 # Remove write permissions for the group and world (if the repo belongs to you)
-if [ "$USER_ID" -eq "$(stat -c '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+if [ "$USER_ID" -eq "$(stat -c "%u" "$ZSH_CUSTOMIZATION_BASE")" ]; then
   chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
 fi
 
@@ -97,7 +99,10 @@ fi
 
 # Install new zshrc
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
-[ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
+if [ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ]; then
+  mkdir -p /etc/skel
+  cp -f "${HOME}/.zshrc" /etc/skel/.zshrc
+fi
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
@@ -111,7 +116,7 @@ for command in python3 python python2 :; do
   fi
 done
 
-# Migrate bash history if python installed
+# Migrate bash history if it hasn't already if python installed
 [ "$python_command" != ":" ] &&
   [ ! -f "${HOME}/.zsh_history" ] &&
   [ -f "${HISTFILE:="${HOME}/.bash_history"}" ] &&
