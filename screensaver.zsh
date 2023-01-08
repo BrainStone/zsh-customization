@@ -38,7 +38,7 @@ screensaver:invoker() {
   touch "$(tty)" &>/dev/null
 
   # Clear out standard input
-  read -lsk
+  zle read -sl
   # Reset prompt after program ends
   zle reset-prompt
 }
