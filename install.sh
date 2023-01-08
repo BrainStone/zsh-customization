@@ -38,6 +38,7 @@ fi
 
 # Set global installation dir (may be customized externally)
 ZSH_GLOBAL_CUSTOMIZATION_BASE="${ZSH_GLOBAL_CUSTOMIZATION_BASE:-/opt/zsh-customization}"
+# Whether to install the software globally
 ZSH_INSTALL_GLOBALLY="${ZSH_INSTALL_GLOBALLY:-false}"
 
 USER_ID="$(id -u)"
@@ -70,6 +71,7 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
 elif [ "$USER_ID" -eq "$(stat -c "%u" "$ZSH_CUSTOMIZATION_BASE")" ]; then
+  # Get the git branch to use from the variable
   branch="$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)"
   branch="${branch:-master}"
 
