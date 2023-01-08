@@ -2,10 +2,21 @@
 # Taken from oh-my-zsh
 function is_update_available() {
   # Check if we have a default route, else assume no update available (as we don't have an internet connection!)
-  # If we have a default gateway `route -n` outputs a line that looks like this and we just try to match it:
-  # 0.0.0.0 <gateway IP> 0.0.0.0 UG <more stuff>
-  # The U means up, G means gateway (not important, that's why we're not checking it). The U is gurantueed to be first.
-  route -n | grep -qE "^(0\.){3}0[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+(0\.){3}0[[:space:]]+U" || return 1
+  if (( ${+commands[route]} )); then
+    # If we have a default gateway `route -n` outputs a line that looks like this and we just try to match it:
+    # 0.0.0.0 <gateway IP> 0.0.0.0 UG <more stuff>
+    # The U means up, G means gateway (not important, that's why we're not checking it). The U is guaranteed to be first.
+    route -n | grep -qE "^(0\.){3}0[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+(0\.){3}0[[:space:]]+U" \
+      || return 1
+  elif (( ${+commands[ip]} )); then
+    # If we have a default gateway `ip route show` outputs a line that looks like this and we just try to match it:
+    # default via <gateway IP> dev <device> proto <protocol>[ metric <metric>]
+    ip route show | grep -qE "^default[[:space:]]+via[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+dev[[:space:]]+[^[:space:]]+[[:space:]]+proto[[:space:]]+[^[:space:]]+([[:space:]]+metric[[:space:]]+[[:digit:]]+)?$" \
+      || return 1
+  else
+    # No program available to check for internet connectivity. Assume we have internet connectivity and continue the check
+    :
+  fi
 
   local branch
   branch=${"$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)":-master}
