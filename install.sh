@@ -6,7 +6,7 @@ command_exists() {
 
 ask_user_yn() {
   while true; do
-    printf '%s (y/n)' "$*"
+    printf '%s (y/n) ' "$*"
     read -r yn
     case "$yn" in
     [Yy]*)
