@@ -52,13 +52,16 @@ screensaver:invoker() {
 }
 
 TRAPALRM() {
+  # Early exit if the screensaver is disabled
+  [[ "$ZSH_SCREENSAVER_DELAY" -gt 0 ]] || return 0
+
   local last_action tty
   # The atime of the tty file descriptor is updated on every key stroke (with rare exceptions)
   # And skip if we can't determine the tty (can happen when other commands run, for autocomplete for example)
-  tty="$(tty)" || return
+  tty="$(tty)" || return 0
   last_action="$(stat --format=%X "$tty" 2>/dev/null)" || return 0
 
   # Start the screensaver after ZSH_SCREENSAVER_DELAY seconds of inactivity
-  [[ "$ZSH_SCREENSAVER_DELAY" -gt 0 && "$((EPOCHSECONDS - last_action))" -gt "$ZSH_SCREENSAVER_DELAY" ]] &&
+  [[ "$((EPOCHSECONDS - last_action))" -gt "$ZSH_SCREENSAVER_DELAY" ]] &&
     screensaver:invoker
 }
