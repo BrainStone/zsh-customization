@@ -10,8 +10,8 @@ function is_update_available() {
       || return 1
   elif (( ${+commands[ip]} )); then
     # If we have a default gateway `ip route show` outputs a line that looks like this and we just try to match it:
-    # default via <gateway IP> dev <device> proto <protocol>[ metric <metric>]
-    ip route show | grep -qE "^default[[:space:]]+via[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+dev[[:space:]]+[^[:space:]]+[[:space:]]+proto[[:space:]]+[^[:space:]]+([[:space:]]+metric[[:space:]]+[[:digit:]]+)?$" \
+    # default via <gateway IP> dev <device> ...
+    ip route show | grep -qE "^default[[:space:]]+via[[:space:]]+([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}[[:space:]]+dev[[:space:]]+[^[:space:]]+" \
       || return 1
   else
     # No program available to check for internet connectivity. Assume we have internet connectivity and continue the check
