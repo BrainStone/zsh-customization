@@ -97,7 +97,10 @@ fi
 
 # Install new zshrc
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
-[ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && cp "${HOME}/.zshrc" /etc/skel/.zshrc
+if [ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ]; then
+  mkdir -p /etc/skel
+  cp -f "${HOME}/.zshrc" /etc/skel/.zshrc
+fi
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
@@ -111,7 +114,7 @@ for command in python3 python python2 :; do
   fi
 done
 
-# Migrate bash history if python installed
+# Migrate bash history if it hasn't already if python installed
 [ "$python_command" != ":" ] &&
   [ ! -f "${HOME}/.zsh_history" ] &&
   [ -f "${HISTFILE:="${HOME}/.bash_history"}" ] &&
