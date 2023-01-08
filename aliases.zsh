@@ -4,7 +4,10 @@
 # Helper stuff
 check_sudo() {
   # We are root, no need to check.
-  [ "$EUID" -eq 0 ] && return 0
+  [[ "$EUID" -eq 0 ]] && return 0
+
+  # If we don't have a sudo command, don't use it
+  [[ -x "$(command -v sudo)" ]] || return 1
 
   local prompt
   prompt=$(sudo -nv 2>&1)
@@ -17,11 +20,45 @@ check_sudo() {
   fi
 }
 
+zsh-theme:branch() {
+  local use_sudo=
+  [[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && check_sudo && use_sudo=sudo
+
+  if [[ $# -gt 0 ]]; then
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+      cat <<EOF
+zsh-theme:branch - Set or view the current branch of the zsh-customization repository
+
+Usage:
+  zsh-theme:branch [BRANCH]
+  zsh-theme:branch --unset
+  zsh-theme:branch -h | --help
+
+Options:
+  -h --help  Show this help text.
+  --unset    Unset the current branch.
+
+If BRANCH is specified, sets the current branch of the zsh-customization repository to BRANCH.
+If no arguments are given, displays the current branch.
+EOF
+      return 0
+    elif [[ "$1" == "--unset" ]]; then
+      $use_sudo git -C "${ZSH_CUSTOMIZATION_BASE}" config --local --unset-all zsh-customization.branch
+    else
+      $use_sudo git -C "${ZSH_CUSTOMIZATION_BASE}" config --local --replace-all zsh-customization.branch -- "$1"
+    fi
+  else
+    $use_sudo git -C "${ZSH_CUSTOMIZATION_BASE}" config --local --get zsh-customization.branch || echo "<default>"
+  fi
+}
+
 # Selfupdate!
 if [[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && check_sudo; then
-  alias update-zsh-theme='sudo HOME="$HOME" sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
+  alias zsh-theme:update='sudo HOME="$HOME" sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
+  alias zsh-theme:branch='sudo git -C "${ZSH_CUSTOMIZATION_BASE}" config --local zsh-customization.branch'
 else
-  alias update-zsh-theme='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
+  alias zsh-theme:update='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
+  alias zsh-theme:branch='git -C "${ZSH_CUSTOMIZATION_BASE}" config --local zsh-customization.branch'
 fi
 
 # Generic stuff
