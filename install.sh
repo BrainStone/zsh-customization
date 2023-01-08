@@ -69,7 +69,7 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 # Download or update git repo
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
   git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
-elif [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+elif [ "$USER_ID" -eq "$(stat -c '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   branch="$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)"
   branch="${branch:-master}"
 
@@ -78,7 +78,7 @@ elif [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   git -C "$ZSH_CUSTOMIZATION_BASE" checkout "$branch"
   git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
 else
-  echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat --format '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
+  echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat -c '%U' "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
 fi
 
 if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.directory "$ZSH_CUSTOMIZATION_BASE" >/dev/null 2>&1; then
@@ -86,7 +86,7 @@ if [ "$ZSH_INSTALL_GLOBALLY" = "true" ] && ! git config --get --system safe.dire
 fi
 
 # Remove write permissions for the group and world (if the repo belongs to you)
-if [ "$USER_ID" -eq "$(stat --format '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
+if [ "$USER_ID" -eq "$(stat -c '%u' "$ZSH_CUSTOMIZATION_BASE")" ]; then
   chmod -R g-w,o-w "$ZSH_CUSTOMIZATION_BASE"
 fi
 
