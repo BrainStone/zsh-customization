@@ -18,6 +18,14 @@ fi
 # trigger function every second
 TMOUT=1
 
+screensaver:clear_stdin() {
+  # Include the termios.h library
+  emulate -L zsh
+  autoload -Uz tcflush
+  # Flush stdin
+  tcflush stdin 0
+}
+
 screensaver:invoker() {
   if is_variable_set ZSH_SCREENSAVER_NEEDS_EXIT_HELP; then
     # Start screensaver as background command
@@ -38,7 +46,7 @@ screensaver:invoker() {
   touch "$(tty)" &>/dev/null
 
   # Clear out standard input
-  zle read -k 1000000
+  screensaver:clear_stdin
   # Reset prompt after program ends
   zle reset-prompt
 }
