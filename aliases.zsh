@@ -55,10 +55,8 @@ EOF
 # Selfupdate!
 if [[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && check_sudo; then
   alias zsh-theme:update='sudo HOME="$HOME" sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
-  alias zsh-theme:branch='sudo git -C "${ZSH_CUSTOMIZATION_BASE}" config --local zsh-customization.branch'
 else
   alias zsh-theme:update='sh "${ZSH_CUSTOMIZATION_BASE}/install.sh" --skip-restart; exec zsh'
-  alias zsh-theme:branch='git -C "${ZSH_CUSTOMIZATION_BASE}" config --local zsh-customization.branch'
 fi
 
 # Generic stuff
