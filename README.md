@@ -11,6 +11,7 @@ Make sure you have the following commands installed:
 - `curl`
 - `git`
 - `route`
+- `sudo` (if you install it globally)
 - `zsh`
 
 Then just run the install.sh:
