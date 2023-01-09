@@ -109,7 +109,8 @@ OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
 [ "$OHMYZSH" = "${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
 
 # Detect python version
-for command in python3 python python2 :; do
+python_command=:
+for command in python3 python python2; do
   if command_exists "$command"; then
     python_command="$command"
     break
