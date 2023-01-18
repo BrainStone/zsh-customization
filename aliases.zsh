@@ -7,7 +7,7 @@ check_sudo() {
   [[ "$EUID" -eq 0 ]] && return 0
 
   # If we don't have a sudo command, don't use it
-  [[ -x "$(command -v sudo)" ]] || return 1
+  [[ -x "$(whence -p sudo)" ]] || return 1
 
   local prompt
   prompt=$(sudo -nv 2>&1)
