@@ -146,6 +146,9 @@ export HISTORY_IGNORE="oc login *"
 # Restore defaults before setting my values
 #zwt restore-defaults
 
+# Syntax highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
 # Window title customization
 export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=4
 export ZSH_WINDOW_TITLE_PREFIX='%n@%M'
