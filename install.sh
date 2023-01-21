@@ -44,8 +44,10 @@ ZSH_INSTALL_GLOBALLY="${ZSH_INSTALL_GLOBALLY:-false}"
 USER_ID="$(id -u)"
 
 if [ "$USER_ID" -eq 0 ] &&
-  [ ! -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] &&
-  ask_user_yn "Do you want to install these customizations globally?"; then
+  [ ! -d "$ZSH_GLOBAL_CUSTOMIZATION_BASE" ] && (
+  [ "$ZSH_INSTALL_GLOBALLY" = "true" ] ||
+    ask_user_yn "Do you want to install these customizations globally?"
+); then
   ZSH_CUSTOMIZATION_BASE="$ZSH_GLOBAL_CUSTOMIZATION_BASE"
   ZSH_INSTALL_GLOBALLY=true
 fi
