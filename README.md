@@ -20,6 +20,19 @@ Then just run the install.sh:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/BrainStone/zsh-customization/master/install.sh)"
 ```
 
+### Set zsh as default shell
+
+To set zsh as your default shell run:
+
+```
+chsh --shell "$(which zsh)"
+```
+
+## Font
+
+This theme uses the special font of powerlevel10k.  
+Follow these instructions to download and configure the font: https://github.com/romkatv/powerlevel10k/tree/21e89cb61d9ed240c1ddf6dd09ce306e7c9cf437#meslo-nerd-font-patched-for-powerlevel10k
+
 ## Special variables
 
 All variables are considered active, when they are set and are not set to `false`, `no` or `0`.  
