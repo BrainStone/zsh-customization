@@ -127,6 +127,7 @@ plugins=(
   gitfast
   gitignore
   zsh-autosuggestions
+  zsh-hist
   zsh-syntax-highlighting
 )
 
