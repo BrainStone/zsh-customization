@@ -49,6 +49,9 @@ export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
 # Check for updates as before instant prompt
 source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
 
+# Enable direnv
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
