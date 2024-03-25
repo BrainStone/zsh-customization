@@ -49,7 +49,7 @@ export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
 # Check for updates as before instant prompt
 source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
 
-# Enable direnv
+# Prepare direnv
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -58,6 +58,9 @@ source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# Enable direnv
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
