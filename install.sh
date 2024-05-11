@@ -96,11 +96,11 @@ fi
 
 # Take care of existing .zshrc
 [ -f "${HOME}/.zshrc" ] &&
-  [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh")" ] &&
+  [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${ZSH_CUSTOMIZATION_BASE}/zshrc/root_zshrc.zsh")" ] &&
   mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
 
 # Install new zshrc
-sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
+sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/zshrc/root_zshrc.zsh" >"${HOME}/.zshrc"
 if [ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ]; then
   mkdir -p /etc/skel
   cp -f "${HOME}/.zshrc" /etc/skel/.zshrc
