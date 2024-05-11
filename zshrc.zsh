@@ -61,6 +61,8 @@ fi
 
 # Enable direnv
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+# Enable thefuck
+(( ${+commands[thefuck]} )) && emulate zsh -c "$(thefuck --alias)"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
