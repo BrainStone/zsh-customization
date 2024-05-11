@@ -7,6 +7,6 @@
 # Are we using the global config?
 export ZSH_INSTALL_GLOBALLY=XXX_GLOBAL_XXX
 # The actual .zshrc file. Contains all centralized customizations!
-source "XXX_PATH_XXX/zshrc.zsh"
+source "XXX_PATH_XXX/zshrc/zshrc.zsh"
 
 [ -f ~/.zshrc_local_post ] && source ~/.zshrc_local_post

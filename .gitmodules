@@ -1,18 +1,18 @@
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh
+	path = zshrc/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 [submodule "custom/plugins/zsh-autosuggestions"]
-	path = custom/plugins/zsh-autosuggestions
+	path = zshrc/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "custom/plugins/zsh-syntax-highlighting"]
-	path = custom/plugins/zsh-syntax-highlighting
+	path = zshrc/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "custom/themes/powerlevel10k"]
-	path = custom/themes/powerlevel10k
+	path = zshrc/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "helper/bash-to-zsh-hist"]
-	path = helper/bash-to-zsh-hist
+	path = zshrc/helper/bash-to-zsh-hist
 	url = https://gist.github.com/96bc8e553e40937fe11f07b0139ccb84.git
 [submodule "custom/plugins/zsh-hist"]
-	path = custom/plugins/zsh-hist
+	path = zshrc/custom/plugins/zsh-hist
 	url = https://github.com/marlonrichert/zsh-hist.git
