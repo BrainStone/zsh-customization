@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /usr/bin/env sh
 
 command_exists() {
   [ -x "$(command -v "$1")" ]
