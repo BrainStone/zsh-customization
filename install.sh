@@ -68,6 +68,7 @@ fi
 # Set installation dir (may be customized externally)
 # If the global installation dir is in use, this gets overridden
 ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
+ZSH_CUSTOMIZATION_ZSHRC_BASE="${ZSH_CUSTOMIZATION_BASE}/zshrc"
 
 # Download or update git repo
 if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
@@ -96,11 +97,11 @@ fi
 
 # Take care of existing .zshrc
 [ -f "${HOME}/.zshrc" ] &&
-  [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${ZSH_CUSTOMIZATION_BASE}/zshrc/root_zshrc.zsh")" ] &&
+  [ "$(head -n1 "${HOME}/.zshrc")" != "$(head -n1 "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/root_zshrc.zsh")" ] &&
   mv "${HOME}/.zshrc" "${HOME}/.zshrc.orig"
 
 # Install new zshrc
-sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_BASE}/zshrc/root_zshrc.zsh" >"${HOME}/.zshrc"
+sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
 if [ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ]; then
   mkdir -p /etc/skel
   cp -f "${HOME}/.zshrc" /etc/skel/.zshrc
@@ -108,7 +109,7 @@ fi
 
 # Get rid of existing Oh My ZSH installation
 OHMYZSH="${ZSH:-"${HOME}/.oh-my-zsh"}"
-[ "$OHMYZSH" = "${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
+[ "$OHMYZSH" = "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/oh-my-zsh" ] && OHMYZSH="${HOME}/.oh-my-zsh"
 
 # Detect python version
 python_command=:
@@ -123,7 +124,7 @@ done
 [ "$python_command" != ":" ] &&
   [ ! -f "${HOME}/.zsh_history" ] &&
   [ -f "${HISTFILE:="${HOME}/.bash_history"}" ] &&
-  "$python_command" "${ZSH_CUSTOMIZATION_BASE}/helper/bash-to-zsh-hist/bash-to-zsh-hist.py" <"${HISTFILE}" >>"${HOME}/.zsh_history"
+  "$python_command" "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/helper/bash-to-zsh-hist/bash-to-zsh-hist.py" <"${HISTFILE}" >>"${HOME}/.zsh_history"
 
 if [ -d "$OHMYZSH" ]; then
   echo "Found existing \"Oh My ZSH\" installation in \"${OHMYZSH}\"!"
