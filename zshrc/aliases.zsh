@@ -10,10 +10,9 @@ check_sudo() {
   [[ -x "$(whence -p sudo)" ]] || return 1
 
   local prompt
-  prompt=$(sudo -nv 2>&1)
-  if [ $? -eq 0 ]; then
+  if prompt="$(sudo -nv 2>&1)"; then
     return 0 # Has sudo permissions and password entered recently
-  elif echo $prompt | grep -q '^sudo:'; then
+  elif echo "$prompt" | grep -q '^sudo:'; then
     return 0 # Has sudo permissions but needs password
   else
     return 1 # No sudo permissions whatsoever
