@@ -41,13 +41,17 @@ bindkey -s "^[Oo" "/"; bindkey -s "^[OQ" "/"
 bindkey -s "^[OX" "="
 
 # Path to your oh-my-zsh installation.
-export ZSH_CUSTOMIZATION_BASE="${0:a:h}"
-[[ "$ZSH_INSTALL_GLOBALLY" == "true" ]] && export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
-export ZSH="${ZSH_CUSTOMIZATION_BASE}/oh-my-zsh"
-export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_BASE}/custom"
+export ZSH_CUSTOMIZATION_BASE="${0:a:h:h}"
+export ZSH_CUSTOMIZATION_ZSHRC_BASE="${ZSH_CUSTOMIZATION_BASE}/zshrc"
+if [[ "$ZSH_INSTALL_GLOBALLY" == "true" ]]; then
+  export ZSH_GLOBAL_CUSTOMIZATION_BASE="$ZSH_CUSTOMIZATION_BASE"
+  export ZSH_GLOBAL_CUSTOMIZATION_ZSHRC_BASE="$ZSH_CUSTOMIZATION_ZSHRC_BASE"
+fi
+export ZSH="${ZSH_CUSTOMIZATION_ZSHRC_BASE}/oh-my-zsh"
+export ZSH_CUSTOM="${ZSH_CUSTOMIZATION_ZSHRC_BASE}/custom"
 
 # Check for updates as before instant prompt
-source "${ZSH_CUSTOMIZATION_BASE}/check_for_update.zsh"
+source "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/check_for_update.zsh"
 
 # Prepare direnv
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
@@ -140,7 +144,7 @@ plugins=(
 )
 
 source "${ZSH}/oh-my-zsh.sh"
-source "${ZSH_CUSTOMIZATION_BASE}/aliases.zsh"
+source "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/aliases.zsh"
 
 # User configuration
 
@@ -177,6 +181,6 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd window-title:precmd
 add-zsh-hook preexec window-title:preexec
 
-# To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh".
-[[ ! -f "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh" ]] ||
-  source "${ZSH_CUSTOMIZATION_BASE}/p10k_config.zsh"
+# To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh".
+[[ ! -f "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh" ]] ||
+  source "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh"
