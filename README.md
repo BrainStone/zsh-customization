@@ -14,6 +14,25 @@ Make sure you have the following commands installed:
 - `sudo` (if you install it globally)
 - `zsh`
 
+Command to install all those packages (on Debian based distros):
+
+```sh
+sudo apt install curl git net-tools sudo zsh
+```
+
+Following commands are recommended:
+
+- `bat`/`batcat`
+- `btop`
+- `direnv`
+- `thefuck`
+
+Command to install all those packages (on Debian based distros):
+
+```sh
+sudo apt install bat btop direnv thefuck
+```
+
 Then just run the install.sh:
 
 ```sh
