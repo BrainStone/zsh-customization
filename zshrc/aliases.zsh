@@ -62,6 +62,7 @@ fi
 alias ,='sudo -i'
 alias ll='ls -lAh'
 alias sudo='sudo ' # This preserves aliases through sudo!
+(( ! ${+commands[bat]} && ${+commands[batcat]} )) && alias bat='batcat' # I want bat back
 
 # git stuff
 alias newbranch='git checkout -b'
