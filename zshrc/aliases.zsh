@@ -88,7 +88,7 @@ make_shareable_video() {
 	local output_file="${base_name}_shareable.mp4"
 	local crf="${2:-20}"
 	
-  ffmpeg -hide_banner -i "$input_file" -c:v libx264 -crf "$crf" -preset veryslow -profile:v high -level 4.0 -pix_fmt yuv420p -c:a aac -b:a 128k "$output_file"
+	ffmpeg -hide_banner -i "$input_file" -c:v libx264 -crf "$crf" -preset veryslow -profile:v high -level 4.0 -pix_fmt yuv420p -c:a aac -b:a 128k "$output_file"
 
 	if [[ $? -eq 0 ]]; then
 		echo "Conversion successful: $output_file"
