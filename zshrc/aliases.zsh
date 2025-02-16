@@ -59,7 +59,7 @@ else
 fi
 
 # Generic stuff
-alias ,='sudo -i'
+alias ,='sudo -s'
 alias ll='ls -lAh'
 alias sudo='sudo ' # This preserves aliases through sudo!
 (( ! ${+commands[bat]} && ${+commands[batcat]} )) && alias bat='batcat' # I want bat back
