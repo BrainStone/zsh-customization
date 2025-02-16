@@ -184,3 +184,6 @@ add-zsh-hook preexec window-title:preexec
 # To customize prompt, run `p10k configure` or edit "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh".
 [[ ! -f "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh" ]] ||
   source "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/p10k_config.zsh"
+
+# $PATH deduplication
+export PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
