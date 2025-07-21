@@ -63,6 +63,7 @@ alias ,='sudo -s'
 alias ll='ls -lAh'
 alias sudo='sudo ' # This preserves aliases through sudo!
 (( ! ${+commands[bat]} && ${+commands[batcat]} )) && alias bat='batcat' # I want bat back
+alias rsyncp='rsync -ah --no-inc-recursive --info=flist2,progress2 --stats --partial' # rsync with nice progress
 
 # git stuff
 alias newbranch='git checkout -b'
