@@ -140,6 +140,7 @@ plugins=(
   gitignore
   zsh-autosuggestions
   zsh-hist
+  bitwarden-ssh-agent
   zsh-syntax-highlighting
 )
 
