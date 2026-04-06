@@ -4,20 +4,12 @@
 _setup_bitwarden_ssh_agent() {
 	local bw_sock="$HOME/.bitwarden-ssh-agent.sock"
 
-	# Check if Bitwarden socket exists and is a socket
-	if [ -S "$bw_sock" ]; then
-		# Test if we can connect to it (using zsocket if available in Zsh, otherwise assume it's okay)
-		if [ -n "$ZSH_VERSION" ] && zmodload zsh/net/socket >/dev/null 2>&1; then
-			if zsocket "$bw_sock" 2>/dev/null; then
-				export SSH_AUTH_SOCK="$bw_sock"
-				return 0
-			fi
-		else
-			# Fallback for non-zsh or missing zsocket: just check if it exists
-			# (already done by -S "$bw_sock")
-			export SSH_AUTH_SOCK="$bw_sock"
-			return 0
-		fi
+	# Check if Bitwarden socket exists (even if not yet a socket, it might be about to become one)
+	if [ -e "$bw_sock" ]; then
+		# If the socket exists, we want to use it regardless of whether it's "live"
+		# at this exact moment. Bitwarden will fulfill requests once it initializes.
+		export SSH_AUTH_SOCK="$bw_sock"
+		return 0
 	fi
 	return 1
 }
