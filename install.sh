@@ -80,17 +80,29 @@ ZSH_CUSTOMIZATION_BASE="${ZSH_CUSTOMIZATION_BASE:-"${HOME}/zsh-customization"}"
 ZSH_CUSTOMIZATION_ZSHRC_BASE="${ZSH_CUSTOMIZATION_BASE}/zshrc"
 
 # Download or update git repo
-if [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
+if [ "_$1" = "_--skip-git" ]; then
+	shift
+elif [ ! -d "$ZSH_CUSTOMIZATION_BASE" ]; then
 	git clone --recursive --jobs=10 https://github.com/BrainStone/zsh-customization.git "$ZSH_CUSTOMIZATION_BASE"
 elif [ "$USER_ID" -eq "$(stat -c "%u" "$ZSH_CUSTOMIZATION_BASE")" ]; then
 	# Get the git branch to use from the variable
 	branch="$(git -C "$ZSH_CUSTOMIZATION_BASE" config --get --local zsh-customization.branch 2>/dev/null)"
 	branch="${branch:-master}"
 
+	# Calculate hash of current script to detect if it was updated
+	if [ -f "$0" ]; then
+		current_script_hash="$(cksum "$0")"
+	fi
+
 	git -C "$ZSH_CUSTOMIZATION_BASE" reset --hard
 	git -C "$ZSH_CUSTOMIZATION_BASE" clean -dx -ff
 	git -C "$ZSH_CUSTOMIZATION_BASE" checkout "$branch"
 	git -C "$ZSH_CUSTOMIZATION_BASE" pull --recurse-submodules --jobs=10
+
+	# Re-execute script if it was updated
+	if [ -n "$current_script_hash" ] && [ "$current_script_hash" != "$(cksum "$0")" ]; then
+		exec sh "$0" --skip-git "$@"
+	fi
 else
 	echo "WARNING: Can't update the git repository in \"$ZSH_CUSTOMIZATION_BASE\" because it belongs to \"$(stat -c "%U" "$ZSH_CUSTOMIZATION_BASE")\" instead of you (\"$(id -un)\")!"
 fi
