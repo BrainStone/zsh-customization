@@ -104,14 +104,15 @@ fi
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
 
 # Configure global SSH agent if possible
-if [ -f "${HOME}/.xprofile" ] || [ -f "${HOME}/.profile" ]; then
-  profile_file="${HOME}/.xprofile"
-  [ ! -f "$profile_file" ] && profile_file="${HOME}/.profile"
-  
-  if ! grep -q "ssh-agent-setup.sh" "$profile_file" 2>/dev/null; then
-    printf "\n# Added by zsh-customization: setup Bitwarden or standard ssh-agent\n[ -f \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\" ] && . \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\"\n" "${ZSH_CUSTOMIZATION_BASE}" "${ZSH_CUSTOMIZATION_BASE}" >> "$profile_file"
-  fi
-fi
+profile_files="${HOME}/.xprofile ${HOME}/.profile ${HOME}/.zprofile"
+for profile_file in $profile_files; do
+	# Create if it doesn't exist, as some desktop environments source these
+	[ ! -f "$profile_file" ] && touch "$profile_file"
+
+	if ! grep -q "ssh-agent-setup.sh" "$profile_file" 2>/dev/null; then
+		printf "\n# Added by zsh-customization: setup Bitwarden or standard ssh-agent\n[ -f \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\" ] && . \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\"\n" "${ZSH_CUSTOMIZATION_BASE}" "${ZSH_CUSTOMIZATION_BASE}" >>"$profile_file"
+	fi
+done
 
 if [ "$USER_ID" -eq 0 ] && [ "$ZSH_INSTALL_GLOBALLY" = "true" ]; then
   mkdir -p /etc/skel

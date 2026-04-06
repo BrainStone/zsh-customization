@@ -76,6 +76,11 @@ else
 	fi
 fi
 
+# Export to systemd user environment for GUI apps/IDEs if available
+if command -v systemctl >/dev/null 2>&1; then
+	systemctl --user set-environment SSH_AUTH_SOCK="$SSH_AUTH_SOCK"
+fi
+
 # Clean up internal functions (shell-specific)
 if [ -n "$ZSH_VERSION" ] || [ -n "$BASH_VERSION" ]; then
 	unset -f _setup_bitwarden_ssh_agent _setup_standard_ssh_agent _is_remote_session
