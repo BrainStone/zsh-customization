@@ -1,7 +1,16 @@
 #! /usr/bin/env sh
 
+# Helper stuff
 command_exists() {
   [ -x "$(command -v "$1")" ]
+}
+
+# Function to ensure a file/dir is owned by the real user when running as root
+fix_ownership() {
+  [ "$(id -u)" -ne 0 ] && return 0
+  [ ! -e "$1" ] && return 0
+  
+  chown --reference="${HOME}" "$1"
 }
 
 ask_user_yn() {
@@ -102,12 +111,16 @@ fi
 
 # Install new zshrc
 sed -e "s@XXX_GLOBAL_XXX@${ZSH_INSTALL_GLOBALLY}@g" -e "s@XXX_PATH_XXX@${ZSH_CUSTOMIZATION_BASE}@g" "${ZSH_CUSTOMIZATION_ZSHRC_BASE}/root_zshrc.zsh" >"${HOME}/.zshrc"
+fix_ownership "${HOME}/.zshrc"
 
 # Configure global SSH agent if possible
 profile_files="${HOME}/.xprofile ${HOME}/.profile ${HOME}/.zprofile"
 for profile_file in $profile_files; do
 	# Create if it doesn't exist, as some desktop environments source these
-	[ ! -f "$profile_file" ] && touch "$profile_file"
+	if [ ! -f "$profile_file" ]; then
+		touch "$profile_file"
+		fix_ownership "$profile_file"
+	fi
 
 	if ! grep -q "ssh-agent-setup.sh" "$profile_file" 2>/dev/null; then
 		printf "\n# Added by zsh-customization: setup Bitwarden or standard ssh-agent\n[ -f \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\" ] && . \"%s/zshrc/helper/ssh-agent/ssh-agent-setup.sh\"\n" "${ZSH_CUSTOMIZATION_BASE}" "${ZSH_CUSTOMIZATION_BASE}" >>"$profile_file"
