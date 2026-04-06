@@ -57,11 +57,20 @@ _setup_standard_ssh_agent() {
 
 # Main logic
 # Priority:
-# 1. SSH agent forwarding (pre-existing valid SSH_AUTH_SOCK)
-# 2. Bitwarden SSH agent (if socket exists)
-# 3. Standard local ssh-agent
+# 1. SSH agent forwarding (pre-existing valid SSH_AUTH_SOCK in a remote session)
+# 2. Bitwarden SSH agent (if socket exists) - overrides local desktop agents
+# 3. Start standard local ssh-agent (if no agent is already running)
 
-if [ ! -S "$SSH_AUTH_SOCK" ]; then
+# Check if we are in a remote session (SSH)
+_is_remote_session() {
+	[ -n "$SSH_TTY" ] || [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]
+}
+
+if _is_remote_session && [ -S "$SSH_AUTH_SOCK" ]; then
+	# Remote session with agent forwarding: don't touch it!
+	:
+else
+	# Local session or no forwarded agent: try Bitwarden first
 	if ! _setup_bitwarden_ssh_agent; then
 		_setup_standard_ssh_agent
 	fi
@@ -69,5 +78,5 @@ fi
 
 # Clean up internal functions (shell-specific)
 if [ -n "$ZSH_VERSION" ] || [ -n "$BASH_VERSION" ]; then
-	unset -f _setup_bitwarden_ssh_agent _setup_standard_ssh_agent
+	unset -f _setup_bitwarden_ssh_agent _setup_standard_ssh_agent _is_remote_session
 fi
