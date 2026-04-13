@@ -2,15 +2,19 @@
 # Prioritizes Bitwarden's SSH agent if available, otherwise falls back to standard ssh-agent
 
 _setup_bitwarden_ssh_agent() {
-	local bw_sock="$HOME/.bitwarden-ssh-agent.sock"
+	local bw_sock
+	
+	# Try both the native client's socket and the flatpak client's socket
+	for bw_sock in "$HOME/.bitwarden-ssh-agent.sock" "$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"; do
+		# Check if Bitwarden socket exists (even if not yet a socket, it might be about to become one)
+		if [ -e "$bw_sock" ]; then
+			# If the socket exists, we want to use it regardless of whether it's "live"
+			# at this exact moment. Bitwarden will fulfill requests once it initializes.
+			export SSH_AUTH_SOCK="$bw_sock"
+			return 0
+		fi
+	done
 
-	# Check if Bitwarden socket exists (even if not yet a socket, it might be about to become one)
-	if [ -e "$bw_sock" ]; then
-		# If the socket exists, we want to use it regardless of whether it's "live"
-		# at this exact moment. Bitwarden will fulfill requests once it initializes.
-		export SSH_AUTH_SOCK="$bw_sock"
-		return 0
-	fi
 	return 1
 }
 
